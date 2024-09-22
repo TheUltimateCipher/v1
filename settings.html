@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Ultimate Cipher</title>
+    <link id="theme-link" rel="stylesheet" href="" />
+    <style>
+      body {
+        visibility: hidden; /* Hide body initially */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="hud-container" id="hud-container">
+      <div class="hud" id="hud">This is the HUD!</div>
+    </div>
+    <div class="image-container snow-theme">
+      <img src="Themes/images/snow/snow-bg.jpeg" alt="snowy background" />
+    </div>
+    <div id="particles-js"></div>
+    <div class="square">
+      <h1>Settings</h1>
+
+      <!-- Theme selection -->
+      <div class="theme-container">
+        <p>Theme</p>
+        <select id="theme-selector">
+          <option value="light">Light</option>
+          <option value="dark">Dark</option>
+          <option value="snow">Snow</option>
+          <option value="hack" id="vip-theme" disabled>Hack</option>
+        </select>
+      </div>
+
+      <!-- Particles toggle -->
+      <div class="item-container">
+        <p>Particles</p>
+        <label class="switch" id="toggle-particles">
+          <input type="checkbox" id="particles" disabled />
+          <span class="slider"></span>
+        </label>
+      </div>
+
+      <div class="container">
+        <div class="entryarea">
+          <input
+            class="message"
+            id="message"
+            type="text"
+            autocomplete="off"
+            required
+          />
+          <div class="labelline">Enter VIP code:</div>
+        </div>
+      </div>
+
+      <button class="glow-button" onclick="checkAnswer()">Submit</button>
+
+      <!-- Back button -->
+      <button class="glow-button" onclick="window.location.href='index.html'">
+        Back
+      </button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <!-- <script src="Themes/tooltip.js"></script> -->
+    <script src="Themes/scroll.js"></script>
+
+    <script>
+      function setSquareScale() {
+        const screenSize = window.innerWidth; // or innerHeight depending on your needs
+        const squareScale = screenSize / 1200; // You can adjust this divisor based on your design
+        document.documentElement.style.setProperty(
+          '--square-scale',
+          squareScale
+        );
+      }
+
+      setSquareScale();
+      window.addEventListener('resize', setSquareScale);
+
+      // Check if VIP-CODE exists in session storage
+      if (sessionStorage.getItem('VIP-CODE') === null) {
+        // If it doesn't exist, set it to "false"
+        sessionStorage.setItem('VIP-CODE', 'false');
+      }
+
+      // Function to check and enable/disable the particles switch based on VIP status
+      // Function to enable special access for the Hack theme
+      // Function to enable/disable the particles switch and hack theme based on VIP status
+
+      function enableSpecialAccess() {
+        const vipCode = sessionStorage.getItem('VIP-CODE');
+        const toggleParticles = document.getElementById('toggle-particles'); // Fixed reference to the actual input
+        const particles = document.getElementById('particles');
+        const hackOption = document.getElementById('vip-theme');
+        const themeSelector = document.getElementById('theme-selector');
+        const HUD = document.getElementById('hud-container');
+
+        if (vipCode === 'true') {
+          // Enable particles switch and hack theme
+          particles.disabled = false;
+          hackOption.disabled = false;
+
+          // Remove HUD event listeners to prevent it from showing up
+          themeSelector.removeEventListener('mouseover', showHUD);
+          themeSelector.removeEventListener('mouseout', hideHUD);
+          toggleParticles.removeEventListener('mouseover', showHUD);
+          toggleParticles.removeEventListener('mouseout', hideHUD);
+        } else {
+          // Add HUD event listeners if VIP is not true
+          themeSelector.addEventListener('mouseover', () =>
+            showHUD("Enter the VIP code to access special 'Hack' theme!")
+          ); // Anonymous function
+          themeSelector.addEventListener('mouseout', hideHUD);
+          toggleParticles.addEventListener('mouseover', () =>
+            showHUD('Enter VIP code to access particles!')
+          ); // Use dynamic message
+          toggleParticles.addEventListener('mouseout', hideHUD);
+        }
+      }
+
+      function showHUD(msg) {
+        const HUD = document.getElementById('hud-container');
+
+        // Check if VIP code is already true; if so, do not show the HUD
+        const vipCode = sessionStorage.getItem('VIP-CODE');
+        if (vipCode === 'true') {
+          return; // Do nothing if VIP access is granted
+        }
+
+        // Update HUD message and show it if VIP code is not true
+        document.getElementById('hud').textContent = msg;
+        HUD.classList.remove('slideUp');
+        HUD.classList.add('slideDown');
+      }
+
+      function hideHUD() {
+        const HUD = document.getElementById('hud-container');
+        HUD.classList.remove('slideDown');
+        HUD.classList.add('slideUp');
+      }
+
+      function checkAnswer() {
+        const vipCode = sessionStorage.getItem('VIP-CODE');
+        const toggleParticles = document.getElementById('toggle-particles');
+        const hackOption = document.getElementById('vip-theme');
+        const themeSelector = document.getElementById('theme-selector');
+        const HUD = document.getElementById('hud-container');
+
+        const message = document.getElementById('message').value;
+        if (message === 'E') {
+          sessionStorage.setItem('VIP-CODE', 'true');
+          console.log('Stored VIP-CODE: ', sessionStorage.getItem('VIP-CODE'));
+
+          document.getElementById('hud').textContent =
+            'A valid code has been entered';
+          HUD.classList.remove('slideUp');
+          HUD.classList.add('slideDown');
+
+          setTimeout(() => {
+            HUD.classList.remove('slideDown');
+            HUD.classList.add('slideUp');
+          }, 1000);
+
+          // Disable HUD event listeners after entering a valid code
+          themeSelector.removeEventListener('mouseover', showHUD);
+          themeSelector.removeEventListener('mouseout', hideHUD);
+          toggleParticles.removeEventListener('mouseover', showHUD);
+          toggleParticles.removeEventListener('mouseout', hideHUD);
+
+          // Enable the particles toggle switch
+          toggleParticles.querySelector('input').disabled = false; // Enable the toggle switch
+        } else {
+          // Incorrect passcode
+          sessionStorage.setItem('VIP-CODE', 'false');
+          document.getElementById('hud').textContent =
+            'An invalid code has been entered';
+          HUD.classList.remove('slideUp');
+          HUD.classList.add('slideDown');
+
+          setTimeout(() => {
+            HUD.classList.remove('slideDown');
+            HUD.classList.add('slideUp');
+          }, 1000);
+        }
+
+        // After checking the answer, re-enable special access if valid
+        enableSpecialAccess();
+      }
+
+      // Handle theme and particles on DOM content loaded
+      document.addEventListener('DOMContentLoaded', function () {
+        const link = document.getElementById('theme-link');
+        const themeSelector = document.getElementById('theme-selector');
+        const particles = document.getElementById('particles');
+        const hackOption = document.getElementById('vip-theme');
+
+        // Check if VIP-CODE exists in sessionStorage, if not set it to "false"
+        if (sessionStorage.getItem('VIP-CODE') === null) {
+          sessionStorage.setItem('VIP-CODE', 'false');
+        }
+
+        // Get saved theme and particles settings from localStorage
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        const particlesEnabled =
+          localStorage.getItem('particlesEnabled') === 'true';
+
+        // Apply saved theme, but fallback to a non-VIP theme if Hack is selected and no VIP access
+        if (
+          savedTheme === 'hack' &&
+          sessionStorage.getItem('VIP-CODE') !== 'true'
+        ) {
+          themeSelector.value = 'dark';
+          localStorage.setItem('theme', 'dark');
+          link.href = `Themes/dark-theme.css`;
+        } else {
+          themeSelector.value = savedTheme;
+          link.href = `Themes/${savedTheme}-theme.css`;
+        }
+
+        //check if particles enabled is true if not set to false
+        if (particlesEnabled && sessionStorage.getItem('VIP-CODE') !== 'true') {
+          localStorage.setItem('particlesEnabled', 'false');
+        }
+
+        // Apply saved particles toggle state and load particles if VIP code is true
+        if (particlesEnabled && sessionStorage.getItem('VIP-CODE') === 'true') {
+          particles.checked = true;
+          loadParticlesConfig(savedTheme);
+        } else {
+          particles.checked = false;
+        }
+
+        // Show the page once the theme is loaded
+        link.onload = function () {
+          document.body.style.visibility = 'visible';
+        };
+
+        // Handle theme change
+        themeSelector.addEventListener('change', function () {
+          const theme = this.value;
+          link.href = `Themes/${theme}-theme.css`;
+          localStorage.setItem('theme', theme);
+          // Reload particles with the new theme if particles are enabled
+          if (particles.checked) {
+            loadParticlesConfig(theme);
+          }
+        });
+
+        // Handle particles toggle change
+        // Handle particles toggle change
+        particles.addEventListener('change', function () {
+          const isEnabled = this.checked;
+          localStorage.setItem('particlesEnabled', isEnabled);
+
+          if (isEnabled) {
+            // Load particles for the selected theme
+            loadParticlesConfig(themeSelector.value);
+          } else {
+            // Destroy particles
+            destroyParticles();
+          }
+        });
+
+        // Enable/disable the particles switch and hack theme based on VIP status
+        enableSpecialAccess();
+      });
+
+      function loadParticlesConfig(theme) {
+        // Always destroy existing particles before loading new ones
+        destroyParticles();
+
+        // Create and load the new particles config for the theme
+        const script = document.createElement('script');
+        script.src = `Themes/particles-${theme}.js`;
+        script.id = 'particles-config';
+        script.onload = function () {
+          particlesJS.load('particles-js', script.src, function () {
+            console.log('Particles.js config loaded for theme:', theme);
+          });
+        };
+        document.head.appendChild(script);
+      }
+
+      function destroyParticles() {
+        // Clear the particles container to remove particles
+        const particlesContainer = document.getElementById('particles-js');
+        particlesContainer.innerHTML = '';
+        console.log('Particles destroyed');
+      }
+    </script>
+  </body>
+</html>

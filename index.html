@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Ultimate Cipher</title>
+    <script src="Themes/loadTheme.js"></script>
+  </head>
+
+  <body>
+    <div class="hud-container" id="hud-container">
+      <div class="hud" id="hud">This is the HUD!</div>
+    </div>
+
+    <div class="image-container snow-theme">
+      <img src="Themes/images/snow/snow-bg.jpeg" alt="snowy background" />
+    </div>
+
+    <div id="particles-js"></div>
+    <!-- <div class="entire-container"> -->
+    <div class="square">
+      <h1>The Ultimate Cipher</h1>
+
+      <button class="glow-button" onclick="window.location.href='encrypt.html'">
+        Encrypt
+      </button>
+      <button class="glow-button" onclick="window.location.href='decrypt.html'">
+        Decrypt
+      </button>
+
+      <!-- VIP button and tooltip inside a container -->
+      <div id="vip-button-container">
+        <button
+          class="glow-button"
+          id="vip-button"
+          disabled
+          onclick="window.location.href='multipurpose.html'"
+        >
+          VIP ONLY
+        </button>
+      </div>
+
+      <button class="glow-button" onclick="window.location.href='FAQ.html'">
+        FAQ
+      </button>
+      <button
+        class="glow-button"
+        onclick="window.location.href='settings.html'"
+      >
+        Settings
+      </button>
+    </div>
+
+    <!-- HUD floating outside the square -->
+    <!-- </div> -->
+    <!-- <div class="hud">
+      This is the HUD!
+    </div> -->
+
+    <script>
+      // VIP code functionality
+      function enableSpecialAccess() {
+        const vipCode = sessionStorage.getItem('VIP-CODE');
+        const vipButton = document.getElementById('vip-button');
+
+        if (vipCode === 'true') {
+          vipButton.disabled = false;
+        } else {
+          vipButton.disabled = true;
+        }
+      }
+
+      window.onload = function () {
+        enableSpecialAccess();
+      };
+
+      document.addEventListener('DOMContentLoaded', () => {
+        const button = document.getElementById('vip-button');
+        const HUD = document.getElementById('hud-container'); // Fixed case
+        const vipCode = sessionStorage.getItem('VIP-CODE');
+
+        button.addEventListener('mouseover', () => {
+          if (vipCode !== 'true') {
+            document.getElementById('hud').textContent =
+              'Enter VIP code to encrypt longer messages!';
+            HUD.classList.remove('slideUp'); // Ensure slideUp is removed before adding slideDown
+            HUD.classList.add('slideDown');
+          }
+        });
+
+        button.addEventListener('mouseout', () => {
+          if (vipCode !== 'true') {
+            HUD.classList.remove('slideDown'); // Remove slideDown before adding slideUp
+            HUD.classList.add('slideUp');
+          }
+        });
+      });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <!-- <script src="Themes/tooltip.js"></script> -->
+    <script src="Themes/scroll.js"></script>
+  </body>
+</html>

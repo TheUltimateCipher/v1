@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Ultimate Cipher - Encryption & Decryption</title>
+
+    <style>
+      /* Hide the entire body initially */
+      body {
+        visibility: hidden;
+      }
+    </style>
+
+    <script src="Themes/loadTheme.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const vipCode = sessionStorage.getItem('VIP-CODE'); // Get the VIP code from sessionStorage
+
+        // Ensure the VIP-CODE is 'true', meaning the user is a VIP
+        if (vipCode !== 'true') {
+          // If not VIP, redirect the user to index.html
+          window.location.href = 'index.html';
+        } else {
+          // Show the page if the user is VIP
+          document.body.style.visibility = 'visible';
+        }
+      });
+    </script>
+  </head>
+  <body>
+    <div class="image-container snow-theme">
+      <img src="Themes/images/snow/snow-bg.jpeg" alt="snowy background" />
+    </div>
+    <div id="particles-js"></div>
+
+    <div class="square" id="square">
+      <!-- <div class="scrollable"> -->
+      <h1>Encryption & Decryption</h1>
+
+      <button class="glow-button" onclick="changeMode('e')">Encrypt</button>
+      <button class="glow-button" onclick="changeMode('d')">Decrypt</button>
+
+      <div class="container">
+        <div class="entryarea">
+          <input
+            class="message"
+            id="message"
+            type="text"
+            autocomplete="off"
+            required
+          />
+          <div class="labelline">Enter message:</div>
+        </div>
+      </div>
+
+      <button class="glow-button" onclick="process()">Submit</button>
+      <div class="container">
+        <div class="entryarea">
+          <input
+            class="outputfield"
+            id="outputfield"
+            type="text"
+            autocomplete="off"
+            required
+          />
+
+          <!-- <p id="output"></p> -->
+          <!-- <div class="outputdiv" id="output"></div> -->
+
+          <div class="outputdiv">Output:</div>
+          <div id="clipboard" class="clipboard" onclick="copyText()">Copy</div>
+        </div>
+      </div>
+      <button class="glow-button" onclick="window.location.href='index.html'">
+        Back
+      </button>
+      <!-- </div> -->
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="Themes/scroll.js"></script>
+
+    <script>
+      // Function to determine if a number is prime
+      function isPrime(flag) {
+        const primes = [2, 3, 5, 7];
+        const nonPrimes = [0, 1, 4, 6, 8, 9];
+        return flag
+          ? primes[Math.floor(Math.random() * primes.length)]
+          : nonPrimes[Math.floor(Math.random() * nonPrimes.length)];
+      }
+
+      // Function to generate random characters based on input length
+      function generateRandomChars(input) {
+        let randomChars = '';
+        const length = input.length;
+        const minLength = Math.floor(length * 0.95);
+        const maxLength = Math.floor(length * 1.05);
+        const randomLength =
+          minLength + Math.floor(Math.random() * (maxLength - minLength + 1));
+
+        for (let i = 0; i < randomLength; i++) {
+          randomChars +=
+            Math.random() < 0.5
+              ? String.fromCharCode(65 + Math.floor(Math.random() * 26))
+              : String.fromCharCode(97 + Math.floor(Math.random() * 26));
+        }
+        return randomChars;
+      }
+
+      // Function to apply a cipher to a message
+      function applyCipher(key, message) {
+        let finalMSG = '';
+        for (const c of message) {
+          if (/\d/.test(c)) {
+            const shifted = (parseInt(c) + key) % 10;
+            finalMSG += shifted;
+          } else {
+            finalMSG += c;
+          }
+        }
+        return finalMSG;
+      }
+
+      // Function to convert characters to numeric values
+      function convertToNum(input) {
+        let output = '';
+        for (let i = 0; i < input.length; i++) {
+          const ch = input[i];
+          const randnum = Math.floor(Math.random() * 3);
+          if (ch === ' ') {
+            output += `${String(27 + randnum * 33).padStart(2, '0')}${isPrime(
+              true
+            )}`;
+          } else if (ch === '!') {
+            output += `${String(28 + randnum * 33).padStart(2, '0')}${isPrime(
+              true
+            )}`;
+          } else if (ch === '?') {
+            output += `${String(29 + randnum * 33).padStart(2, '0')}${isPrime(
+              true
+            )}`;
+          } else if (ch === "'") {
+            output += `${String(30 + randnum * 33).padStart(2, '0')}${isPrime(
+              true
+            )}`;
+          } else if (ch === '.') {
+            output += `${String(31 + randnum * 33).padStart(2, '0')}${isPrime(
+              true
+            )}`;
+          } else if (ch === ',') {
+            output += `${String(32 + randnum * 33).padStart(2, '0')}${isPrime(
+              true
+            )}`;
+          } else if (ch === '/') {
+            output += `${String(33 + randnum * 33).padStart(2, '0')}${isPrime(
+              true
+            )}`;
+          } else if (ch === ')') {
+            output += `${String(27 + randnum * 33).padStart(2, '0')}${isPrime(
+              false
+            )}`;
+          } else if (ch === '(') {
+            output += `${String(28 + randnum * 33).padStart(2, '0')}${isPrime(
+              false
+            )}`;
+          } else if (ch === '%') {
+            output += `${String(29 + randnum * 33).padStart(2, '0')}${isPrime(
+              false
+            )}`;
+          } else if (ch === '$') {
+            output += `${String(30 + randnum * 33).padStart(2, '0')}${isPrime(
+              false
+            )}`;
+          } else if (ch === '*') {
+            output += `${String(31 + randnum * 33).padStart(2, '0')}${isPrime(
+              false
+            )}`;
+          } else if (ch === ':') {
+            output += `${String(32 + randnum * 33).padStart(2, '0')}${isPrime(
+              false
+            )}`;
+          } else if (ch === '"') {
+            output += `${String(33 + randnum * 33).padStart(2, '0')}${isPrime(
+              false
+            )}`;
+          } else if (/[a-zA-Z]/.test(ch)) {
+            const value = ch.toLowerCase().charCodeAt(0) - 96;
+            output += `${String(value + randnum * 33).padStart(
+              2,
+              '0'
+            )}${isPrime(ch === ch.toUpperCase())}`;
+          } else {
+            output += 'Character not handled';
+          }
+        }
+        return output;
+      }
+
+      // Function to convert numeric values back to characters
+      function convertFromNum(encoded) {
+        let output = '';
+        for (let i = 0; i < encoded.length; i += 3) {
+          const numPart = encoded.substr(i, 2);
+          const numValue = parseInt(numPart);
+          const primeNonPrime = encoded[i + 2];
+
+          if ([27, 60, 93].includes(numValue)) {
+            output +=
+              primeNonPrime === '2' ||
+              primeNonPrime === '3' ||
+              primeNonPrime === '5' ||
+              primeNonPrime === '7'
+                ? ' '
+                : ')';
+          } else if ([28, 61, 94].includes(numValue)) {
+            output +=
+              primeNonPrime === '2' ||
+              primeNonPrime === '3' ||
+              primeNonPrime === '5' ||
+              primeNonPrime === '7'
+                ? '!'
+                : '(';
+          } else if ([29, 62, 95].includes(numValue)) {
+            output +=
+              primeNonPrime === '2' ||
+              primeNonPrime === '3' ||
+              primeNonPrime === '5' ||
+              primeNonPrime === '7'
+                ? '?'
+                : '%';
+          } else if ([30, 63, 96].includes(numValue)) {
+            output +=
+              primeNonPrime === '2' ||
+              primeNonPrime === '3' ||
+              primeNonPrime === '5' ||
+              primeNonPrime === '7'
+                ? "'"
+                : '$';
+          } else if ([31, 64, 97].includes(numValue)) {
+            output +=
+              primeNonPrime === '2' ||
+              primeNonPrime === '3' ||
+              primeNonPrime === '5' ||
+              primeNonPrime === '7'
+                ? '.'
+                : '*';
+          } else if ([32, 65, 98].includes(numValue)) {
+            output +=
+              primeNonPrime === '2' ||
+              primeNonPrime === '3' ||
+              primeNonPrime === '5' ||
+              primeNonPrime === '7'
+                ? ','
+                : ':';
+          } else if ([33, 66, 99].includes(numValue)) {
+            output +=
+              primeNonPrime === '2' ||
+              primeNonPrime === '3' ||
+              primeNonPrime === '5' ||
+              primeNonPrime === '7'
+                ? '/'
+                : '"';
+          } else {
+            let decodedChar = String.fromCharCode(96 + (numValue % 33));
+            if (['2', '3', '5', '7'].includes(primeNonPrime)) {
+              decodedChar = decodedChar.toUpperCase();
+            }
+            output += decodedChar;
+          }
+        }
+        return output;
+      }
+
+      // Function to merge two messages
+      function mergeMessage(msg1, msg2) {
+        let merged = '';
+        let i = 0,
+          j = 0;
+        while (i < msg1.length || j < msg2.length) {
+          if (i < msg1.length && j < msg2.length) {
+            merged += Math.random() < 0.5 ? msg1[i++] : msg2[j++];
+          } else if (i < msg1.length) {
+            merged += msg1[i++];
+          } else if (j < msg2.length) {
+            merged += msg2[j++];
+          }
+        }
+        return merged;
+      }
+
+      // Function to extract letters from a string
+      function findLetters(str) {
+        return str.replace(/[^a-zA-Z]/g, '');
+      }
+
+      // Function to extract numbers from a string
+      function findNumbers(str) {
+        return str.replace(/\D/g, '');
+      }
+
+      // Function to reverse the cipher shift
+      function removeCipher(key, message) {
+        let finalMSG = '';
+        for (const c of message) {
+          if (/\d/.test(c)) {
+            const shifted = (parseInt(c) - (key % 10) + 10) % 10;
+            finalMSG += shifted;
+          } else {
+            finalMSG += c;
+          }
+        }
+        return finalMSG;
+      }
+
+      // Function to calculate the key from random characters
+      function convertToKey(input) {
+        let finalKey = 0;
+        for (const ch of input) {
+          finalKey += ch.toLowerCase().charCodeAt(0) - 96;
+        }
+        return finalKey;
+      }
+
+      let mode = '';
+
+      // Function to set the mode
+      // Function to set the mode and highlight the selected button
+      function changeMode(selectedMode) {
+        mode = selectedMode;
+
+        const encryptButton = document.querySelector(
+          'button[onclick="changeMode(\'e\')"]'
+        );
+        const decryptButton = document.querySelector(
+          'button[onclick="changeMode(\'d\')"]'
+        );
+
+        if (selectedMode === 'e') {
+          encryptButton.classList.add('selected-mode');
+          decryptButton.classList.remove('selected-mode');
+        } else if (selectedMode === 'd') {
+          decryptButton.classList.add('selected-mode');
+          encryptButton.classList.remove('selected-mode');
+        }
+      }
+
+      const outputField = document.getElementById('outputfield');
+
+      // Main function to process the encryption or decryption
+      function process() {
+        const message = document.getElementById('message').value;
+
+        if (mode === 'e') {
+          const firstEncrypt = convertToNum(message);
+          const randomCharacters = generateRandomChars(firstEncrypt);
+          const key = convertToKey(randomCharacters);
+          const secondEncrypt = applyCipher(key, firstEncrypt);
+          const finalEncrypt = mergeMessage(randomCharacters, secondEncrypt);
+          outputField.value = `${finalEncrypt}`;
+        } else if (mode === 'd') {
+          const letters = findLetters(message);
+          const key = convertToKey(letters);
+          const firstDecrypt = findNumbers(message);
+          const secondDecrypt = removeCipher(key, firstDecrypt);
+          const finalDecrypt = convertFromNum(secondDecrypt);
+          outputField.value = `${finalDecrypt}`;
+        } else {
+          outputField.value = 'Please select a mode (Encrypt or Decrypt).';
+        }
+      }
+
+      function copyText() {
+        const decryptedMessage = document.getElementById('outputfield').value;
+
+        navigator.clipboard
+          .writeText(decryptedMessage)
+          .then(() => {
+            document.getElementById('clipboard').textContent = 'Copied ✓';
+            //alert("Copied to clipboard!");
+          })
+          .catch((err) => {
+            console.error('Failed to copy: ', err);
+          });
+      }
+    </script>
+  </body>
+</html>
