@@ -26,7 +26,7 @@ h1 {
 p {
   text-align: center;
   color: white;
-  margin: 0.5rem 0;
+  margin: 0.5rem 0.5rem;
 }
 
 .glow-button {
@@ -47,6 +47,31 @@ p {
 .glow-button:hover {
   background-color: #84a7d9;
   color: white;
+  box-shadow: 0 0 1.25rem #84a7d9;
+  border: 2px solid #7593bf;
+}
+
+.secret-button{
+  font-family: 'Fira Code', monospace;
+  background-color: transparent;
+  border: 2px solid #161616;
+  border-radius: 1rem;
+  color: #161616;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  text-align: center;
+  display: inline-block;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  margin: 0.5rem 0;
+  position: fixed;   /* Position the button relative to the viewport */
+    bottom: 5px;      /* Distance from the bottom of the screen */
+    right: 5px;  
+}
+
+.secret-button:hover {
+  background-color: #84a7d9;
+  color: #2c2c2c;
   box-shadow: 0 0 1.25rem #84a7d9;
   border: 2px solid #7593bf;
 }
