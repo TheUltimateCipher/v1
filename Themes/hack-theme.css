@@ -51,10 +51,10 @@ p {
   border: 2px solid #5ace5e;
 }
 
-.secret-button{
+.secret-button {
   font-family: 'Fira Code', monospace;
   background-color: transparent;
-  border: 2px solid #161616;
+  border: 2px solid #5ace5e;
   border-radius: 1rem;
   color: #161616;
   font-size: 1rem;
@@ -64,16 +64,18 @@ p {
   transition: all 0.3s ease;
   cursor: pointer;
   margin: 0.5rem 0;
-  position: fixed;   /* Position the button relative to the viewport */
-    bottom: 5px;      /* Distance from the bottom of the screen */
-    right: 5px;  
+  position: fixed; /* Position the button relative to the viewport */
+  bottom: 5px; /* Distance from the bottom of the screen */
+  right: 5px;
+  opacity: 0;
 }
 
 .secret-button:hover {
-  background-color: #84a7d9;
-  color: #2c2c2c;
-  box-shadow: 0 0 1.25rem #84a7d9;
-  border: 2px solid #7593bf;
+  background-color: #4caf50;
+  color: #161616;
+  box-shadow: 0 0 1.25rem #4caf50;
+  border: 2px solid #5ace5e;
+  opacity: 1;
 }
 
 .selected-mode {
