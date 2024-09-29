@@ -67,6 +67,7 @@ p {
   position: fixed;   /* Position the button relative to the viewport */
     bottom: 5px;      /* Distance from the bottom of the screen */
     right: 5px;  
+    opacity: 0;
 }
 
 .secret-button:hover {
@@ -74,6 +75,7 @@ p {
   color: #2c2c2c;
   box-shadow: 0 0 1.25rem #84a7d9;
   border: 2px solid #7593bf;
+  opacity: 1;
 }
 
 .selected-mode {
