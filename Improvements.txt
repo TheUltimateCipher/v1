@@ -1,7 +1,4 @@
-Everything is good to go (except the extra mile >:\)
-The extra mile:
-about:blank cloak the VIP page so that no one can just type the url LOL
-Particle bug is back >:\
+Create a favicon dumb asterisk
 
 Color stuff:
 Main blue COlor: 84a7d9

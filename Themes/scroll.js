@@ -1,22 +1,19 @@
-// Get the current page URL
-const currentPage = window.location.pathname;
+document.addEventListener('DOMContentLoaded', function () {
+  const square = document.querySelector('.square');
 
-// Extract the last part of the URL (e.g., 'index.html', 'settings.html')
-const pageName = currentPage.substring(currentPage.lastIndexOf('/') + 1);
-
-
-const container = document.querySelector('.square');
-const title = document.querySelector('h1');
-
-function adjustPadding() {
-  if (container.scrollHeight > container.clientHeight) {
-    
-      container.style.paddingTop = '75px'; // Add padding when scrolling is needed
-    
-  } else {
-    container.style.paddingTop = '0'; // Remove padding when not needed
+  function checkOverflow() {
+    if (square.scrollHeight > square.clientHeight) {
+      // Content is overflowing, disable justify-content: center;
+      square.style.justifyContent = 'flex-start'; // Align content to the top
+    } else {
+      // Content fits, keep it centered
+      square.style.justifyContent = 'center';
+    }
   }
-}
 
-window.addEventListener('resize', adjustPadding);
-window.addEventListener('load', adjustPadding);
+  // Initial check
+  checkOverflow();
+
+  // Optionally, recheck if the window is resized
+  window.addEventListener('resize', checkOverflow);
+});

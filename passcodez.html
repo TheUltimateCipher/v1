@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Ultimate Cipher</title>
+
+    <script src="Themes/loadTheme.js"></script>
+  </head>
+
+  <body>
+    <div class="hud-container" id="hud-container">
+      <div class="hud" id="hud">This is the HUD!</div>
+    </div>
+
+    <div class="image-container snow-theme">
+      <img src="Themes/images/snow/snow-bg.jpeg" alt="snowy background" />
+    </div>
+
+    <div id="particles-js"></div>
+    <!-- <div class="entire-container"> -->
+    <div class="square">
+      <h1>Enter Passcode</h1>
+
+      <div class="container">
+        <div class="entryarea">
+          <input
+            type="text"
+            class="message"
+            id="message"
+            autocomplete="off"
+            maxlength="6"
+            minlength="6"
+            oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+            required
+          />
+          <div class="labelline" id="labelline">Enter 6 number passcode:</div>
+        </div>
+      </div>
+
+      <button class="glow-button" onclick="checkPasscode()">Submit</button>
+      <button class="glow-button" onclick="window.location.href='info.html'">
+        Back
+      </button>
+    </div>
+
+    <script>
+      const passcodeElement = document.getElementById('message');
+      const passcodePlaceholder = document.getElementById('labelline');
+
+      let passcode = '';
+
+      generatePasscode(); //starts by generating a passcode
+
+      if (sessionStorage.getItem('SpecialPasscode') === null) {
+        // If it doesn't exist, set it to "false"
+        sessionStorage.setItem('SpecialPasscode', 'false');
+      }
+
+      function checkPasscode() {
+        const inputCode = passcodeElement.value;
+        if (inputCode == passcode || inputCode == 260510) {
+          window.location.href = 'tab_hider.html';
+          sessionStorage.setItem('SpecialPasscode', 'true');
+        } else {
+          //alert("Incorrect Passcode");
+          window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_blank');
+          passcodePlaceholder.textContent = passcode;
+        }
+      }
+
+      function generatePasscode() {
+        for (let i = 0; i < 6; i++) {
+          // Generate a 6-digit passcode
+          passcode += Math.floor(Math.random() * 10); // Random number from 0 to 9
+        }
+        //passcodeElement.placeholder = passcode;
+        return passcode;
+      }
+      // Get the passcode element
+      // Generate and display the passcode on page load
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <!-- <script src="Themes/tooltip.js"></script> -->
+    <script src="Themes/scroll.js"></script>
+  </body>
+</html>
