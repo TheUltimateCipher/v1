@@ -12,12 +12,10 @@
     </style>
   </head>
   <body>
-    <div class="hud-container" id="hud-container">
-      <div class="hud" id="hud">This is the HUD!</div>
-    </div>
     <div class="image-container snow-theme">
-      <img src="Themes/images/snow/snow-bg.jpeg" alt="snowy background" />
+      <img id="background-image" src="Themes/images/seasons/winter/winter-bg.png" alt="snowy background" />
     </div>
+
     <div id="particles-js"></div>
     <div class="square">
       <h1>Settings</h1>
@@ -28,7 +26,10 @@
         <select id="theme-selector">
           <option value="light">Light</option>
           <option value="dark">Dark</option>
-          <option value="snow">Snow</option>
+          <option value="winter">Winter</option>
+          <option value="fall">Fall</option>
+          <option value="spring">Spring</option>
+          <option value="summer">Summer</option>
           <option value="hack" id="vip-theme" disabled>Hack</option>
         </select>
       </div>
@@ -66,8 +67,9 @@
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
     <!-- <script src="Themes/tooltip.js"></script> -->
     <script src="Themes/scroll.js"></script>
-
+    <script src="Themes/images/seasons/seasons.js"></script>
     <script>
+      // localStorage.clear();
       function setSquareScale() {
         const screenSize = window.innerWidth; // or innerHeight depending on your needs
         const squareScale = screenSize / 1200; // You can adjust this divisor based on your design
@@ -85,10 +87,17 @@
         // If it doesn't exist, set it to "false"
         sessionStorage.setItem('VIP-CODE', 'false');
       }
-
       // Function to check and enable/disable the particles switch based on VIP status
       // Function to enable special access for the Hack theme
       // Function to enable/disable the particles switch and hack theme based on VIP status
+
+
+      function switchImage(theme) {
+        const imgElement = document.getElementById('background-image');
+        imgElement.src = `Themes/images/seasons/${theme}/${theme}-bg.png`;
+      }
+
+
 
       function enableSpecialAccess() {
         const vipCode = sessionStorage.getItem('VIP-CODE');
@@ -101,7 +110,12 @@
         if (vipCode === 'true') {
           // Enable particles switch and hack theme
           particles.disabled = false;
-          hackOption.disabled = false;
+          // hackOption.disabled = false;
+
+          // Loop through each option and enable it
+          for (let option of themeSelector.options) {
+            option.disabled = false;
+          }
 
           // Remove HUD event listeners to prevent it from showing up
           themeSelector.removeEventListener('mouseover', showHUD);
@@ -208,17 +222,16 @@
           localStorage.getItem('particlesEnabled') === 'true';
 
         // Apply saved theme, but fallback to a non-VIP theme if Hack is selected and no VIP access
-        if (
-          savedTheme === 'hack' &&
-          sessionStorage.getItem('VIP-CODE') !== 'true'
-        ) {
-          themeSelector.value = 'dark';
-          localStorage.setItem('theme', 'dark');
-          link.href = `Themes/dark-theme.css`;
-        } else {
-          themeSelector.value = savedTheme;
-          link.href = `Themes/${savedTheme}-theme.css`;
-        }
+          if (savedTheme === 'hack' && sessionStorage.getItem('VIP-CODE') !== 'true') {
+            themeSelector.value = 'dark';
+            localStorage.setItem('theme', 'dark');
+            link.href = `Themes/dark-theme.css`;
+          } else {
+            themeSelector.value = savedTheme;
+            link.href = `Themes/${savedTheme}-theme.css`;
+            switchImage(savedTheme); // Set initial background image
+          }
+
 
         //check if particles enabled is true if not set to false
         if (particlesEnabled && sessionStorage.getItem('VIP-CODE') !== 'true') {
@@ -243,11 +256,13 @@
           const theme = this.value;
           link.href = `Themes/${theme}-theme.css`;
           localStorage.setItem('theme', theme);
+          switchImage(theme); // Call switchImage to change background image
           // Reload particles with the new theme if particles are enabled
           if (particles.checked) {
             loadParticlesConfig(theme);
           }
         });
+
 
         // Handle particles toggle change
         // Handle particles toggle change
