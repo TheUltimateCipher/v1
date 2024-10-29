@@ -9,16 +9,51 @@
       body {
         visibility: hidden; /* Hide body initially */
       }
+      .square {
+        justify-content: flex-start;
+      }
+      #customDivider {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
     </style>
   </head>
   <body>
-    <div class="image-container snow-theme">
-      <img id="background-image" src="Themes/images/seasons/winter/winter-bg.png" alt="snowy background" />
+    <div class="hud-container" id="hud-container">
+      <div class="hud" id="hud">This is the HUD!</div>
     </div>
+
+    <!-- <div class="image-container snow-theme">
+      <img
+        id="background-image"
+        src="Themes/images/seasons/winter/winter-bg.png"
+        alt="snowy background"
+      />
+    </div> -->
 
     <div id="particles-js"></div>
     <div class="square">
       <h1>Settings</h1>
+      <!-- <p>welcome to the settings page! Here you can change whatever you want to such as enabling or disabling particles, changing the theme, and try your hand at the VIP code!</p> -->
+      <h2>Import Particles</h2>
+      <div id="customDivider">
+        <input
+          type="file"
+          id="importParticles"
+          accept=".js"
+          class="import"
+          disabled
+        />
+        <button id="importParticlesBtn" class="glow-button">
+          Import Particles
+        </button>
+
+        <h2>Import Theme</h2>
+        <input type="file" id="importSettings" accept=".zip" class="import" />
+        <button id="importBtn" class="glow-button">Import Theme</button>
+      </div>
 
       <!-- Theme selection -->
       <div class="theme-container">
@@ -30,6 +65,7 @@
           <option value="fall">Fall</option>
           <option value="spring">Spring</option>
           <option value="summer">Summer</option>
+          <option value="custom">Custom</option>
           <option value="hack" id="vip-theme" disabled>Hack</option>
         </select>
       </div>
@@ -65,138 +101,156 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
     <!-- <script src="Themes/tooltip.js"></script> -->
-    <script src="Themes/scroll.js"></script>
     <script src="Themes/images/seasons/seasons.js"></script>
+    <script src="Themes/customTheme.js"></script>
+
     <script>
       // localStorage.clear();
       function setSquareScale() {
         const screenSize = window.innerWidth; // or innerHeight depending on your needs
         const squareScale = screenSize / 1200; // You can adjust this divisor based on your design
         document.documentElement.style.setProperty(
-          '--square-scale',
+          "--square-scale",
           squareScale
         );
       }
 
       setSquareScale();
-      window.addEventListener('resize', setSquareScale);
+      window.addEventListener("resize", setSquareScale);
 
       // Check if VIP-CODE exists in session storage
-      if (sessionStorage.getItem('VIP-CODE') === null) {
+      if (sessionStorage.getItem("VIP-CODE") === null) {
         // If it doesn't exist, set it to "false"
-        sessionStorage.setItem('VIP-CODE', 'false');
+        sessionStorage.setItem("VIP-CODE", "false");
       }
       // Function to check and enable/disable the particles switch based on VIP status
       // Function to enable special access for the Hack theme
       // Function to enable/disable the particles switch and hack theme based on VIP status
 
-
       function switchImage(theme) {
-        const imgElement = document.getElementById('background-image');
-        imgElement.src = `Themes/images/seasons/${theme}/${theme}-bg.png`;
+        // const imgElement = document.getElementById("background-image");
+        // imgElement.style.display = "none";
+        document.body.style.backgroundImage = `url('Themes/images/seasons/${theme}/${theme}-bg.png')`;
       }
+      //////////////////////////////////////////////////////////////////////////
+      //HELP ME DEBUG HERE
 
+      function uploadParticlesHUD() {
+        const uploadParticles = document.getElementById("importParticles");
+        const particlesToggle = document.getElementById("particles"); // Reference to the particles checkbox
 
+        uploadParticles.addEventListener("mouseover", () => {
+          // Only show HUD if particles are disabled
+          if (particlesToggle.disabled || !particlesToggle.checked) {
+            showHUD("Enable particles before importing!", "true");
+            document.getElementById("importParticles").disabled = true;
+          } else {
+            document.getElementById("importParticles").disabled = false;
+          }
+        });
+        uploadParticles.addEventListener("mouseout", hideHUD);
+      }
+      uploadParticlesHUD();
+
+      //////////////////////////////////////////////////////////////////////////
 
       function enableSpecialAccess() {
-        const vipCode = sessionStorage.getItem('VIP-CODE');
-        const toggleParticles = document.getElementById('toggle-particles'); // Fixed reference to the actual input
-        const particles = document.getElementById('particles');
-        const hackOption = document.getElementById('vip-theme');
-        const themeSelector = document.getElementById('theme-selector');
-        const HUD = document.getElementById('hud-container');
+        const vipCode = sessionStorage.getItem("VIP-CODE");
+        const particles = document.getElementById("particles");
+        const themeSelector = document.getElementById("theme-selector");
+        const toggleParticles = document.getElementById("toggle-particles");
+        // const uploadParticles = document.getElementById("importParticles");
 
-        if (vipCode === 'true') {
-          // Enable particles switch and hack theme
-          particles.disabled = false;
-          // hackOption.disabled = false;
+        // uploadParticles.addEventListener("mouseover", () =>
+        //     showHUD("Enable particles before importing!")
+        //   );
+        //   uploadParticles.addEventListener("mouseout", hideHUD);
 
-          // Loop through each option and enable it
-          for (let option of themeSelector.options) {
-            option.disabled = false;
-          }
-
-          // Remove HUD event listeners to prevent it from showing up
-          themeSelector.removeEventListener('mouseover', showHUD);
-          themeSelector.removeEventListener('mouseout', hideHUD);
-          toggleParticles.removeEventListener('mouseover', showHUD);
-          toggleParticles.removeEventListener('mouseout', hideHUD);
+        if (vipCode === "true") {
+          particles.disabled = false; // Enable particles
+          [...themeSelector.options].forEach(
+            (option) => (option.disabled = false)
+          ); // Enable all theme options
         } else {
-          // Add HUD event listeners if VIP is not true
-          themeSelector.addEventListener('mouseover', () =>
+          themeSelector.addEventListener("mouseover", () =>
             showHUD("Enter the VIP code to access special 'Hack' theme!")
-          ); // Anonymous function
-          themeSelector.addEventListener('mouseout', hideHUD);
-          toggleParticles.addEventListener('mouseover', () =>
-            showHUD('Enter VIP code to access particles!')
-          ); // Use dynamic message
-          toggleParticles.addEventListener('mouseout', hideHUD);
+          );
+          themeSelector.addEventListener("mouseout", hideHUD);
+          toggleParticles.addEventListener("mouseover", () =>
+            showHUD("Enter VIP code to access particles!")
+          );
+          toggleParticles.addEventListener("mouseout", hideHUD);
         }
       }
 
-      function showHUD(msg) {
-        const HUD = document.getElementById('hud-container');
+      function showHUD(msg, special) {
+        if (special === undefined) {
+          special = "false";
+        }
+        const HUD = document.getElementById("hud-container");
 
         // Check if VIP code is already true; if so, do not show the HUD
-        const vipCode = sessionStorage.getItem('VIP-CODE');
-        if (vipCode === 'true') {
+        const vipCode = sessionStorage.getItem("VIP-CODE");
+        if (vipCode === "true" && special === "false") {
           return; // Do nothing if VIP access is granted
         }
 
         // Update HUD message and show it if VIP code is not true
-        document.getElementById('hud').textContent = msg;
-        HUD.classList.remove('slideUp');
-        HUD.classList.add('slideDown');
+        document.getElementById("hud").textContent = msg;
+        HUD.classList.remove("slideUp");
+        HUD.classList.add("slideDown");
       }
 
       function hideHUD() {
-        const HUD = document.getElementById('hud-container');
-        HUD.classList.remove('slideDown');
-        HUD.classList.add('slideUp');
+        const HUD = document.getElementById("hud-container");
+        HUD.classList.remove("slideDown");
+        HUD.classList.add("slideUp");
       }
 
       function checkAnswer() {
-        const vipCode = sessionStorage.getItem('VIP-CODE');
-        const toggleParticles = document.getElementById('toggle-particles');
-        const hackOption = document.getElementById('vip-theme');
-        const themeSelector = document.getElementById('theme-selector');
-        const HUD = document.getElementById('hud-container');
+        const vipCode = sessionStorage.getItem("VIP-CODE");
+        const toggleParticles = document.getElementById("toggle-particles");
+        const hackOption = document.getElementById("vip-theme");
+        const themeSelector = document.getElementById("theme-selector");
+        const HUD = document.getElementById("hud-container");
 
-        const message = document.getElementById('message').value;
-        if (message === 'E') {
-          sessionStorage.setItem('VIP-CODE', 'true');
-          console.log('Stored VIP-CODE: ', sessionStorage.getItem('VIP-CODE'));
+        const message = document.getElementById("message").value;
+        if (message === "E") {
+          sessionStorage.setItem("VIP-CODE", "true");
+          console.log("Stored VIP-CODE: ", sessionStorage.getItem("VIP-CODE"));
 
-          document.getElementById('hud').textContent =
-            'A valid code has been entered';
-          HUD.classList.remove('slideUp');
-          HUD.classList.add('slideDown');
+          document.getElementById("hud").textContent =
+            "A valid code has been entered";
+          HUD.classList.remove("slideUp");
+          HUD.classList.add("slideDown");
 
           setTimeout(() => {
-            HUD.classList.remove('slideDown');
-            HUD.classList.add('slideUp');
+            HUD.classList.remove("slideDown");
+            HUD.classList.add("slideUp");
           }, 1000);
 
           // Disable HUD event listeners after entering a valid code
-          themeSelector.removeEventListener('mouseover', showHUD);
-          themeSelector.removeEventListener('mouseout', hideHUD);
-          toggleParticles.removeEventListener('mouseover', showHUD);
-          toggleParticles.removeEventListener('mouseout', hideHUD);
+          themeSelector.removeEventListener("mouseover", showHUD);
+          themeSelector.removeEventListener("mouseout", hideHUD);
+          toggleParticles.removeEventListener("mouseover", showHUD);
+          toggleParticles.removeEventListener("mouseout", hideHUD);
+          uploadParticlesHUD();
 
           // Enable the particles toggle switch
-          toggleParticles.querySelector('input').disabled = false; // Enable the toggle switch
+          toggleParticles.querySelector("input").disabled = false; // Enable the toggle switch
         } else {
           // Incorrect passcode
-          sessionStorage.setItem('VIP-CODE', 'false');
-          document.getElementById('hud').textContent =
-            'An invalid code has been entered';
-          HUD.classList.remove('slideUp');
-          HUD.classList.add('slideDown');
+          sessionStorage.setItem("VIP-CODE", "false");
+          document.getElementById("hud").textContent =
+            "An invalid code has been entered";
+          HUD.classList.remove("slideUp");
+          HUD.classList.add("slideDown");
 
           setTimeout(() => {
-            HUD.classList.remove('slideDown');
-            HUD.classList.add('slideUp');
+            HUD.classList.remove("slideDown");
+            HUD.classList.add("slideUp");
           }, 1000);
         }
 
@@ -205,74 +259,184 @@
       }
 
       // Handle theme and particles on DOM content loaded
-      document.addEventListener('DOMContentLoaded', function () {
-        const link = document.getElementById('theme-link');
-        const themeSelector = document.getElementById('theme-selector');
-        const particles = document.getElementById('particles');
-        const hackOption = document.getElementById('vip-theme');
+      document.addEventListener("DOMContentLoaded", function () {
+        const link = document.getElementById("theme-link");
+        const themeSelector = document.getElementById("theme-selector");
+        const particles = document.getElementById("particles");
+        const hackOption = document.getElementById("vip-theme");
 
         // Check if VIP-CODE exists in sessionStorage, if not set it to "false"
-        if (sessionStorage.getItem('VIP-CODE') === null) {
-          sessionStorage.setItem('VIP-CODE', 'false');
+        if (sessionStorage.getItem("VIP-CODE") === null) {
+          sessionStorage.setItem("VIP-CODE", "false");
         }
 
         // Get saved theme and particles settings from localStorage
-        const savedTheme = localStorage.getItem('theme') || 'dark';
+        const savedTheme = localStorage.getItem("theme") || "dark";
         const particlesEnabled =
-          localStorage.getItem('particlesEnabled') === 'true';
+          localStorage.getItem("particlesEnabled") === "true";
 
         // Apply saved theme, but fallback to a non-VIP theme if Hack is selected and no VIP access
-          if (savedTheme === 'hack' && sessionStorage.getItem('VIP-CODE') !== 'true') {
-            themeSelector.value = 'dark';
-            localStorage.setItem('theme', 'dark');
-            link.href = `Themes/dark-theme.css`;
+        if (
+          savedTheme === "hack" &&
+          sessionStorage.getItem("VIP-CODE") !== "true"
+        ) {
+          themeSelector.value = "dark";
+          localStorage.setItem("theme", "dark");
+          link.href = `Themes/dark-theme.css`;
+        } else {
+          themeSelector.value = savedTheme;
+          link.href = `Themes/${savedTheme}-theme.css`;
+
+          if (savedTheme === "custom") {
+            document.getElementById("customDivider").style.display = "flex";
+            const hasCustomBackground = localStorage.getItem(
+              "hasCustomBackground"
+            );
+
+            if (hasCustomBackground === "true") {
+              //issue with checking if hasCustomBackground
+
+              applyCustomBackgroundImage();
+            }
+            if (hasCustomBackground === "false") {
+              //const bgImage = document.getElementById("background-image");
+              //bgImage.style.visibility = "hidden";
+              document.body.style.backgroundImage = "none";
+            }
           } else {
-            themeSelector.value = savedTheme;
-            link.href = `Themes/${savedTheme}-theme.css`;
             switchImage(savedTheme); // Set initial background image
+            document.getElementById("customDivider").style.display = "none";
           }
 
+          loadCustomColors();
+        }
 
         //check if particles enabled is true if not set to false
-        if (particlesEnabled && sessionStorage.getItem('VIP-CODE') !== 'true') {
-          localStorage.setItem('particlesEnabled', 'false');
+        if (particlesEnabled && sessionStorage.getItem("VIP-CODE") !== "true") {
+          localStorage.setItem("particlesEnabled", "false");
         }
 
         // Apply saved particles toggle state and load particles if VIP code is true
-        if (particlesEnabled && sessionStorage.getItem('VIP-CODE') === 'true') {
+        if (particlesEnabled && sessionStorage.getItem("VIP-CODE") === "true") {
           particles.checked = true;
-          loadParticlesConfig(savedTheme);
+          if (savedTheme === "custom") {
+            loadParticlesFromStorage();
+          } else {
+            loadParticlesConfig(savedTheme);
+          }
         } else {
           particles.checked = false;
         }
 
-        // Show the page once the theme is loaded
-        link.onload = function () {
-          document.body.style.visibility = 'visible';
-        };
+        const bgImage = new Image();
+        const savedThemez = localStorage.getItem("theme") || "dark"; // Default theme
+
+        // Set the source for the image object without `url(...)`
+        if (
+          savedTheme !== "dark" ||
+          savedTheme !== "light" ||
+          savedTheme !== "hack" ||
+          savedTheme !== "custom"
+        ) {
+          bgImage.src = `Themes/images/seasons/${savedThemez}/${savedThemez}-bg.png`;
+        }
+
+        // When the image is fully loaded, set it as the background
+        if (
+          savedTheme !== "dark" &&
+          savedTheme !== "light" &&
+          savedTheme !== "hack" &&
+          savedTheme !== "custom"
+        ) {
+          bgImage.onload = () => {
+            document.body.style.visibility = "visible"; // Show the body if theme is not one of the predefined ones
+          };
+        } else {
+          // Show the page once the theme's CSS file is fully loaded
+          link.onload = function () {
+            document.body.style.visibility = "visible";
+          };
+        }
 
         // Handle theme change
-        themeSelector.addEventListener('change', function () {
+        themeSelector.addEventListener("change", function () {
           const theme = this.value;
           link.href = `Themes/${theme}-theme.css`;
-          localStorage.setItem('theme', theme);
+          localStorage.setItem("theme", theme);
           switchImage(theme); // Call switchImage to change background image
+          const hasCustomBackground = localStorage.getItem(
+            "hasCustomBackground"
+          );
+
           // Reload particles with the new theme if particles are enabled
-          if (particles.checked) {
-            loadParticlesConfig(theme);
+
+          const savedTheme = localStorage.getItem("theme") || "dark";
+
+          if (savedTheme === "custom") {
+            document.getElementById("customDivider").style.display = "flex";
+
+            if (particles.checked) {
+              loadParticlesFromStorage();
+            }
+
+            if (hasCustomBackground === "true") {
+              applyCustomBackgroundImage();
+            } else {
+              const bgImage = document.getElementById("background-image");
+              bgImage.style.visibility = "hidden";
+              document.body.style.backgroundImage = "none";
+            }
+          } else {
+            document.getElementById("customDivider").style.display = "none";
+
+            if (particles.checked) {
+              loadParticlesConfig(savedTheme);
+              switchImage(savedTheme); // Set initial background image
+            }
           }
+
+          // if (particles.checked) {
+          //   const savedTheme = localStorage.getItem("theme") || "dark";
+
+          //   if (savedTheme === "custom") {
+          //     loadParticlesFromStorage();
+          //     const hasCustomBackground = localStorage.getItem(
+          //       "hasCustomBackground"
+          //     );
+          //     if (hasCustomBackground === "true") {
+          //       //issue with checking if hasCustomBackground
+
+          //       applyCustomBackgroundImage();
+          //     }
+          //     if (hasCustomBackground === "false") {
+          //       const bgImage = document.getElementById("background-image");
+          //       bgImage.style.visibility = "hidden";
+          //       document.body.style.backgroundImage = "none";
+          //     }
+          //   } else {
+          //     loadParticlesConfig(savedTheme);
+          //     switchImage(savedTheme); // Set initial background image
+          //   }
+          // }
         });
 
-
         // Handle particles toggle change
         // Handle particles toggle change
-        particles.addEventListener('change', function () {
+        particles.addEventListener("change", function () {
           const isEnabled = this.checked;
-          localStorage.setItem('particlesEnabled', isEnabled);
+          localStorage.setItem("particlesEnabled", isEnabled);
 
           if (isEnabled) {
+            //alert("custom");
+            const savedTheme = localStorage.getItem("theme") || "dark";
+
             // Load particles for the selected theme
-            loadParticlesConfig(themeSelector.value);
+            if (savedTheme === "custom") {
+              //alert(savedTheme);
+              loadParticlesFromStorage();
+            } else {
+              loadParticlesConfig(themeSelector.value);
+            }
           } else {
             // Destroy particles
             destroyParticles();
@@ -288,23 +452,115 @@
         destroyParticles();
 
         // Create and load the new particles config for the theme
-        const script = document.createElement('script');
+        const script = document.createElement("script");
         script.src = `Themes/particles-${theme}.js`;
-        script.id = 'particles-config';
+        script.id = "particles-config";
         script.onload = function () {
-          particlesJS.load('particles-js', script.src, function () {
-            console.log('Particles.js config loaded for theme:', theme);
+          particlesJS.load("particles-js", script.src, function () {
+            console.log("Particles.js config loaded for theme:", theme);
           });
         };
         document.head.appendChild(script);
       }
 
+      function applyCustomBackgroundImage() {
+        const storedImage = localStorage.getItem("customBackgroundImage");
+        //const imgElement = document.getElementById("background-image");
+
+        if (storedImage) {
+          document.body.style.backgroundImage = `url(${storedImage})`;
+          //imgElement.style.visibility = "hidden"; // Hide default background
+        } else {
+          document.body.style.backgroundImage = "none";
+          //imgElement.style.visibility = "visible"; // Restore default background
+        }
+      }
+
       function destroyParticles() {
         // Clear the particles container to remove particles
-        const particlesContainer = document.getElementById('particles-js');
-        particlesContainer.innerHTML = '';
-        console.log('Particles destroyed');
+        const particlesContainer = document.getElementById("particles-js");
+        particlesContainer.innerHTML = "";
+        console.log("Particles destroyed");
       }
+      function loadCustomColors() {
+        document.documentElement.style.setProperty(
+          "--bg-color",
+          localStorage.getItem("--bg-color")
+        );
+
+        document.documentElement.style.setProperty(
+          "--square-color",
+          localStorage.getItem("--square-color")
+        );
+
+        document.documentElement.style.setProperty(
+          "--main-color",
+          localStorage.getItem("--main-color")
+        );
+
+        document.documentElement.style.setProperty(
+          "--secondary-color",
+          localStorage.getItem("--secondary-color")
+        );
+
+        document.documentElement.style.setProperty(
+          "--font-color",
+          localStorage.getItem("--font-color")
+        );
+
+        document.documentElement.style.setProperty(
+          "--slider-color",
+          localStorage.getItem("--slider-color")
+        );
+      }
+      function loadParticlesFromStorage() {
+        const storedConfig = localStorage.getItem("particlesConfig");
+        if (storedConfig) {
+          try {
+            // Parse the stored configuration back into an object
+            window.particlesConfig = JSON.parse(storedConfig); // Store it globally
+
+            // Log to confirm particlesConfig is correctly retrieved
+            console.log(
+              "Loaded particlesConfig from localStorage:",
+              window.particlesConfig
+            );
+
+            // Initialize particles with the stored configuration
+            particlesJS("particles-js", window.particlesConfig); // Use the global version
+          } catch (error) {
+            console.error(
+              "Failed to parse particlesConfig from localStorage:",
+              error
+            );
+          }
+        } else {
+          console.log("No particlesConfig found in localStorage.");
+        }
+      }
+    </script>
+    <!-- <script src="Themes/scroll.js"></script> -->
+    <script>
+      window.addEventListener("load", function () {
+        const square = document.querySelector(".square");
+
+        function checkOverflow() {
+          console.log("checked");
+          if (square.scrollHeight > square.clientHeight) {
+            // Content is overflowing, disable justify-content: center;
+            square.style.justifyContent = "flex-start"; // Align content to the top
+          } else {
+            // Content fits, keep it centered
+            square.style.justifyContent = "center";
+          }
+        }
+
+        // Initial check once the entire window (including images) is fully loaded
+        checkOverflow();
+
+        // Optionally, recheck if the window is resized
+        window.addEventListener("resize", checkOverflow);
+      });
     </script>
   </body>
 </html>

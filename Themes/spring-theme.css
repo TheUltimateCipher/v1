@@ -1,5 +1,33 @@
 @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap');
 /* ============================================================================== */
+/* Import Group */
+/* Import buttons, css, u know the gist
+/* ============================================================================== */
+
+/* Basic styling for input field */
+.import {
+  padding: 10px;
+  background-color: #f5d8cd;
+  border: 2px solid #424242;
+  border-radius: 8px;
+  font-size: 16px;
+  font-family: 'Fira Code', monospace;
+  /* font-family: Arial, sans-serif; */
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* Change color on hover */
+.import:hover {
+  border-color: #84a7d9;
+}
+
+/* For hiding the default file input */
+.import::-webkit-file-upload-button {
+  display: none;
+}
+
+/* ============================================================================== */
 /* Main Group */
 /* Containers, Body, Buttons, Text, Input Boxes, and Toggle Switches */
 /* ============================================================================== */
@@ -18,6 +46,12 @@ body {
 }
 
 h1 {
+  color: #424242;
+  text-align: center;
+  margin: 0.5rem 0.5rem;
+}
+
+h2 {
   color: #424242;
   text-align: center;
   margin: 0.5rem 0.5rem;
@@ -139,7 +173,7 @@ input {
   left: 6.25rem;
   font-size: 1.2rem;
   color: #424242;
-  background-color: #dfdfdf;
+  background-color: #f5d8cd;
   padding: 0 0.625rem;
   transition: 0.2s ease;
 }
@@ -151,7 +185,7 @@ input {
   left: 6.25rem;
   font-size: 1.2rem;
   color: #424242;
-  background-color: #dfdfdf;
+  background-color: #f5d8cd;
   padding: 0 0.625rem;
   transition: 0.2s ease;
 }
@@ -164,7 +198,7 @@ input {
   left: 28.75rem;
   font-size: 1.2rem;
   color: #424242;
-  background-color: #dfdfdf;
+  background-color: #f5d8cd;
   padding: 0 0.625rem;
   transition: 0.2s ease;
   cursor: pointer;

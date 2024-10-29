@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap");
 /* ============================================================================== */
 /* Import Group */
 /* Import buttons, css, u know the gist
@@ -7,11 +7,12 @@
 /* Basic styling for input field */
 .import {
   padding: 10px;
-  background-color: #fde9d7;
-  border: 2px solid #424242;
+  background-color: var(--square-color, #2c2c2c);
+  border: 2px solid var(--font-color, white);
+  color: var(--font-color, white);
   border-radius: 8px;
   font-size: 16px;
-  font-family: 'Fira Code', monospace;
+  font-family: "Fira Code", monospace;
   /* font-family: Arial, sans-serif; */
   cursor: pointer;
   transition: all 0.3s ease;
@@ -19,7 +20,7 @@
 
 /* Change color on hover */
 .import:hover {
-  border-color: #84a7d9;
+  border-color: var(--main-color, #84a7d9);
 }
 
 /* For hiding the default file input */
@@ -34,11 +35,11 @@
 body {
   overflow-x: hidden;
   display: flex;
-  font-family: 'Fira Code', monospace;
+  font-family: "Fira Code", monospace;
   padding: 0rem 30rem;
   height: 100vh;
   margin: 0;
-  background-color: white;
+  background-color: var(--bg-color, #161616);
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -46,29 +47,29 @@ body {
 }
 
 h1 {
-  color: #424242;
+  color: var(--font-color, white);
   text-align: center;
   margin: 0.5rem 0.5rem;
 }
 
 h2 {
-  color: #424242;
+  color: var(--font-color, white);
   text-align: center;
   margin: 0.5rem 0.5rem;
 }
 
 p {
   text-align: center;
-  color: #424242;
+  color: var(--font-color, white);
   margin: 0.5rem 0.5rem;
 }
 
 .glow-button {
-  font-family: 'Fira Code', monospace;
+  font-family: "Fira Code", monospace;
   background-color: transparent;
-  border: 2px solid #424242;
+  border: 2px solid var(--font-color, white);
   border-radius: 1rem;
-  color: #424242;
+  color: var(--font-color, white);
   font-size: 1rem;
   padding: 0.5rem 1rem;
   text-align: center;
@@ -79,18 +80,18 @@ p {
 }
 
 .glow-button:hover {
-  background-color: #84a7d9;
-  color: #424242;
-  box-shadow: 0 0 1.25rem #84a7d9;
-  border: 2px solid #7593bf;
+  background-color: var(--main-color, #84a7d9);
+  color: var(--font-color, white);
+  box-shadow: 0 0 1.25rem var(--main-color, #84a7d9);
+  border: 2px solid var(--secondary-color, #7593bf);
 }
 
-.secret-button{
-  font-family: 'Fira Code', monospace;
+.secret-button {
+  font-family: "Fira Code", monospace;
   background-color: transparent;
-  border: 2px solid white;
+  border: 2px solid #161616;
   border-radius: 1rem;
-  color: white;
+  color: #161616;
   font-size: 1rem;
   padding: 0.5rem 1rem;
   text-align: center;
@@ -98,34 +99,34 @@ p {
   transition: all 0.3s ease;
   cursor: pointer;
   margin: 0.5rem 0;
-  position: fixed;   /* Position the button relative to the viewport */
-    bottom: 5px;      /* Distance from the bottom of the screen */
-    right: 5px;  
-    opacity: 0;
+  position: fixed; /* Position the button relative to the viewport */
+  bottom: 5px; /* Distance from the bottom of the screen */
+  right: 5px;
+  opacity: 0;
 }
 
 .secret-button:hover {
-  background-color: #84a7d9;
-  color: white;
-  box-shadow: 0 0 1.25rem #84a7d9;
-  border: 2px solid #7593bf;
+  background-color: var(--main-color, #84a7d9);
+  color: var(--font-color, #2c2c2c);
+  box-shadow: 0 0 1.25rem var(--main-color, #84a7d9);
+  border: 2px solid var(--secondary-color, #7593bf);
   opacity: 1;
 }
 
 .selected-mode {
-  background-color: #84a7d9;
-  color: #424242;
-  box-shadow: 0 0 1.25rem #84a7d9;
-  border: 2px solid #7593bf;
+  background-color: var(--main-color, #84a7d9);
+  color: var(--font-color, white);
+  box-shadow: 0 0 1.25rem var(--main-color, #84a7d9);
+  border: 2px solid var(--secondary-color, #7593bf);
 }
 
 input {
-  font-family: 'Fira Code', monospace;
+  font-family: "Fira Code", monospace;
   outline: none;
   font-size: 1.5rem;
   padding: 1.5rem 0.625rem;
   border-radius: 1rem;
-  border: 0.25rem solid #424242;
+  border: 0.25rem solid var(--font-color, white);
   background: transparent;
   transition: 0.1s ease;
   width: 70%;
@@ -135,26 +136,26 @@ input {
 .message:focus,
 .message:valid {
   z-index: 1;
-  color: #84a7d9;
-  border: 0.375rem solid #84a7d9;
+  color: var(--main-color, #84a7d9);
+  border: 0.375rem solid var(--main-color, #84a7d9);
 }
 
 .message:focus + .labelline,
 .message:valid + .labelline {
-  color: #84a7d9;
+  color: var(--main-color, #84a7d9);
   transform: translate(0.625rem, -2.8125rem) scale(0.88);
 }
 
 .outputfield:focus,
 .outputfield:valid {
   z-index: 1;
-  color: #84a7d9;
-  border: 0.375rem solid #84a7d9;
+  color: var(--main-color, #84a7d9);
+  border: 0.375rem solid var(--main-color, #84a7d9);
 }
 
 .outputfield:focus + .outputdiv,
 .outputfield:valid + .outputdiv {
-  color: #84a7d9;
+  color: var(--main-color, #84a7d9);
   transform: translate(0.625rem, -2.8125rem) scale(0.88);
 }
 
@@ -162,30 +163,30 @@ input {
 .outputfield:valid + .outputdiv + .clipboard {
   opacity: 1;
   transform: translate(0, -2.8125rem) scale(0.88);
-  color: #84a7d9;
+  color: var(--main-color, #84a7d9);
   z-index: 10;
 }
 
 .labelline {
   z-index: 1;
-  font-family: 'Fira Code', monospace;
+  font-family: "Fira Code", monospace;
   position: absolute;
   left: 6.25rem;
   font-size: 1.2rem;
-  color: #424242;
-  background-color: #fde9d7;
+  color: var(--font-color, white);
+  background-color: var(--square-color, #2c2c2c);
   padding: 0 0.625rem;
   transition: 0.2s ease;
 }
 
 .outputdiv {
   z-index: 2;
-  font-family: 'Fira Code', monospace;
+  font-family: "Fira Code", monospace;
   position: absolute;
   left: 6.25rem;
   font-size: 1.2rem;
-  color: #424242;
-  background-color: #fde9d7;
+  color: var(--font-color, white);
+  background-color: var(--square-color, #2c2c2c);
   padding: 0 0.625rem;
   transition: 0.2s ease;
 }
@@ -193,12 +194,12 @@ input {
 .clipboard {
   z-index: 2;
   opacity: 0;
-  font-family: 'Fira Code', monospace;
+  font-family: "Fira Code", monospace;
   position: absolute;
   left: 28.75rem;
   font-size: 1.2rem;
-  color: #424242;
-  background-color: #fde9d7;
+  color: var(--font-color, white);
+  background-color: var(--square-color, #2c2c2c);
   padding: 0 0.625rem;
   transition: 0.2s ease;
   cursor: pointer;
@@ -247,7 +248,7 @@ input {
 /* The circle inside the slider */
 .slider:before {
   position: absolute;
-  content: '';
+  content: "";
   height: 26px;
   width: 26px;
   left: 4px;
@@ -259,8 +260,8 @@ input {
 
 /* When the checkbox is checked */
 input:checked + .slider {
-  background-color: #84a7d9;
-  box-shadow: 0 0 1.25rem #84a7d9;
+  background-color: var(--main-color, #84a7d9);
+  box-shadow: 0 0 1.25rem var(--main-color, #84a7d9);
 }
 
 /* Move the circle to the right when checked */
@@ -287,7 +288,7 @@ input:checked + .slider:before {
   height: 450px;
   overflow-y: auto;
   overflow-x: hidden;
-  background-color: #fde9d7;
+  background-color: var(--square-color, #2c2c2c);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -301,7 +302,7 @@ input:checked + .slider:before {
 }
 
 .square::after {
-  content: '';
+  content: "";
   display: table;
   clear: both;
 }
@@ -334,8 +335,8 @@ input:checked + .slider:before {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #cccccc; /* Scrollbar thumb color */
-  border-radius: 0.625rem; /* Round the corners of the scrollbar */
+  background-color: var(--slider-color, #1d1d1d);
+  border-radius: 0.625rem;
 }
 
 ::-webkit-scrollbar-track {
@@ -344,7 +345,7 @@ input:checked + .slider:before {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #84a7d9;
+  background-color: var(--main-color, #84a7d9);
 }
 /* ============================================================================== */
 /* Everything Else */
@@ -381,73 +382,73 @@ input:checked + .slider:before {
 #theme-selector {
   transform: scale(0.5);
   margin: 0;
-  font-family: 'Fira Code', monospace;
+  font-family: "Fira Code", monospace;
   width: 120px;
   padding: 10px;
   font-size: 16px;
-  border: 4px solid #424242;
+  border: 4px solid var(--font-color, white);
   border-radius: 5px;
   background-color: transparent;
-  color: #424242;
+  color: var(--font-color, white);
   cursor: pointer;
   position: relative;
 }
 
 #theme-selector::after {
-  content: '▼';
+  content: "▼";
   position: absolute;
   right: 10px;
   top: 50%;
   transform: translateY(-50%);
   font-size: 14px;
-  color: #424242;
+  color: var(--font-color, white);
   pointer-events: none;
 }
 
 #theme-selector:focus {
-  border-color: #84a7d9;
+  border-color: var(--main-color, #84a7d9);
   outline: none;
   background-color: transparent;
 }
 
 #theme-selector option {
-  color: white;
-  background-color: #2c2c2c;
+  color: var(--font-color, white);
+  background-color: var(--square-color, #2c2c2c);
 }
 
-.snow-theme {
-  position: fixed; /* Position relative to the viewport */
+/* .snow-theme {
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   z-index: -1;
-  background-image: url('Themes/images/seasons/summer/summer-bg.jpeg');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-}
+} */
 
-.snow-theme img {
-  display: block; /* Make the image visible */
-}
+/* .snow-theme img {
+  display: block;
+} */
 
 .hud-container {
   position: fixed;
   top: -100px;
   left: 50%;
   transform: translateX(-50%);
+  /* scale(var(--square-scale, 1)) */
   z-index: 1000;
   padding: 20px;
   width: auto;
 }
 
 .hud {
-  background-color: #84a7d9;
-  color: #424242;
+  background-color: var(--main-color, #84a7d9);
+  color: var(--font-color, white);
   text-align: center;
   border-radius: 10px;
-  box-shadow: 0 0 1.25rem #84a7d9;
+  box-shadow: 0 0 1.25rem var(--main-color, #84a7d9);
   padding: 15px 30px;
   font-size: 18px;
 }
@@ -496,14 +497,14 @@ input:checked + .slider:before {
 #loading-bar {
   width: 80%;
   height: 10px;
-  background-color: #808080;
+  background-color: #ddd;
   margin-bottom: 10px;
 }
 
 #progress {
   width: 0;
   height: 100%;
-  background-color: #84a7d9;
-  box-shadow: 0 0 1.25rem #84a7d9;
+  background-color: var(--main-color, #84a7d9);
+  box-shadow: 0 0 1.25rem var(--main-color, #84a7d9);
   transition: width 0.2s;
 }

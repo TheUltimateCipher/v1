@@ -4,12 +4,21 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>The Ultimate Cipher - Decryption</title>
+    <style>
+      body {
+        visibility: hidden; /* Hide body initially */
+      }
+    </style>
     <script src="Themes/loadTheme.js"></script>
   </head>
   <body>
-    <div class="image-container snow-theme">
-      <img src="Themes/images/seasons/winter/winter-bg.png" alt="snowy background" />
-    </div>
+    <!-- <div class="image-container snow-theme">
+      <img
+        id="background-image"
+        src="Themes/images/seasons/winter/winter-bg.png"
+        alt="snowy background"
+      />
+    </div> -->
     <div id="particles-js"></div>
 
     <div class="square">
@@ -76,7 +85,7 @@
 
       // Function to generate random characters based on input length
       function generateRandomChars(input) {
-        let randomChars = '';
+        let randomChars = "";
         const length = input.length;
         const minLength = Math.floor(length * 0.95);
         const maxLength = Math.floor(length * 1.05);
@@ -94,7 +103,7 @@
 
       // Function to apply a cipher to a message
       function applyCipher(key, message) {
-        let finalMSG = '';
+        let finalMSG = "";
         for (const c of message) {
           if (/\d/.test(c)) {
             const shifted = (parseInt(c) + key) % 10;
@@ -108,74 +117,74 @@
 
       // Function to convert characters to numeric values
       function convertToNum(input) {
-        let output = '';
+        let output = "";
         for (let i = 0; i < input.length; i++) {
           const ch = input[i];
           const randnum = Math.floor(Math.random() * 3);
-          if (ch === ' ') {
-            output += `${String(27 + randnum * 33).padStart(2, '0')}${isPrime(
+          if (ch === " ") {
+            output += `${String(27 + randnum * 33).padStart(2, "0")}${isPrime(
               true
             )}`;
-          } else if (ch === '!') {
-            output += `${String(28 + randnum * 33).padStart(2, '0')}${isPrime(
+          } else if (ch === "!") {
+            output += `${String(28 + randnum * 33).padStart(2, "0")}${isPrime(
               true
             )}`;
-          } else if (ch === '?') {
-            output += `${String(29 + randnum * 33).padStart(2, '0')}${isPrime(
+          } else if (ch === "?") {
+            output += `${String(29 + randnum * 33).padStart(2, "0")}${isPrime(
               true
             )}`;
           } else if (ch === "'") {
-            output += `${String(30 + randnum * 33).padStart(2, '0')}${isPrime(
+            output += `${String(30 + randnum * 33).padStart(2, "0")}${isPrime(
               true
             )}`;
-          } else if (ch === '.') {
-            output += `${String(31 + randnum * 33).padStart(2, '0')}${isPrime(
+          } else if (ch === ".") {
+            output += `${String(31 + randnum * 33).padStart(2, "0")}${isPrime(
               true
             )}`;
-          } else if (ch === ',') {
-            output += `${String(32 + randnum * 33).padStart(2, '0')}${isPrime(
+          } else if (ch === ",") {
+            output += `${String(32 + randnum * 33).padStart(2, "0")}${isPrime(
               true
             )}`;
-          } else if (ch === '/') {
-            output += `${String(33 + randnum * 33).padStart(2, '0')}${isPrime(
+          } else if (ch === "/") {
+            output += `${String(33 + randnum * 33).padStart(2, "0")}${isPrime(
               true
             )}`;
-          } else if (ch === ')') {
-            output += `${String(27 + randnum * 33).padStart(2, '0')}${isPrime(
+          } else if (ch === ")") {
+            output += `${String(27 + randnum * 33).padStart(2, "0")}${isPrime(
               false
             )}`;
-          } else if (ch === '(') {
-            output += `${String(28 + randnum * 33).padStart(2, '0')}${isPrime(
+          } else if (ch === "(") {
+            output += `${String(28 + randnum * 33).padStart(2, "0")}${isPrime(
               false
             )}`;
-          } else if (ch === '%') {
-            output += `${String(29 + randnum * 33).padStart(2, '0')}${isPrime(
+          } else if (ch === "%") {
+            output += `${String(29 + randnum * 33).padStart(2, "0")}${isPrime(
               false
             )}`;
-          } else if (ch === '$') {
-            output += `${String(30 + randnum * 33).padStart(2, '0')}${isPrime(
+          } else if (ch === "$") {
+            output += `${String(30 + randnum * 33).padStart(2, "0")}${isPrime(
               false
             )}`;
-          } else if (ch === '*') {
-            output += `${String(31 + randnum * 33).padStart(2, '0')}${isPrime(
+          } else if (ch === "*") {
+            output += `${String(31 + randnum * 33).padStart(2, "0")}${isPrime(
               false
             )}`;
-          } else if (ch === ':') {
-            output += `${String(32 + randnum * 33).padStart(2, '0')}${isPrime(
+          } else if (ch === ":") {
+            output += `${String(32 + randnum * 33).padStart(2, "0")}${isPrime(
               false
             )}`;
           } else if (ch === '"') {
-            output += `${String(33 + randnum * 33).padStart(2, '0')}${isPrime(
+            output += `${String(33 + randnum * 33).padStart(2, "0")}${isPrime(
               false
             )}`;
           } else if (/[a-zA-Z]/.test(ch)) {
             const value = ch.toLowerCase().charCodeAt(0) - 96;
             output += `${String(value + randnum * 33).padStart(
               2,
-              '0'
+              "0"
             )}${isPrime(ch === ch.toUpperCase())}`;
           } else {
-            output += 'Character not handled';
+            output += "Character not handled";
           }
         }
         return output;
@@ -183,7 +192,7 @@
 
       // Function to convert numeric values back to characters
       function convertFromNum(encoded) {
-        let output = '';
+        let output = "";
         for (let i = 0; i < encoded.length; i += 3) {
           const numPart = encoded.substr(i, 2);
           const numValue = parseInt(numPart);
@@ -191,63 +200,63 @@
 
           if ([27, 60, 93].includes(numValue)) {
             output +=
-              primeNonPrime === '2' ||
-              primeNonPrime === '3' ||
-              primeNonPrime === '5' ||
-              primeNonPrime === '7'
-                ? ' '
-                : ')';
+              primeNonPrime === "2" ||
+              primeNonPrime === "3" ||
+              primeNonPrime === "5" ||
+              primeNonPrime === "7"
+                ? " "
+                : ")";
           } else if ([28, 61, 94].includes(numValue)) {
             output +=
-              primeNonPrime === '2' ||
-              primeNonPrime === '3' ||
-              primeNonPrime === '5' ||
-              primeNonPrime === '7'
-                ? '!'
-                : '(';
+              primeNonPrime === "2" ||
+              primeNonPrime === "3" ||
+              primeNonPrime === "5" ||
+              primeNonPrime === "7"
+                ? "!"
+                : "(";
           } else if ([29, 62, 95].includes(numValue)) {
             output +=
-              primeNonPrime === '2' ||
-              primeNonPrime === '3' ||
-              primeNonPrime === '5' ||
-              primeNonPrime === '7'
-                ? '?'
-                : '%';
+              primeNonPrime === "2" ||
+              primeNonPrime === "3" ||
+              primeNonPrime === "5" ||
+              primeNonPrime === "7"
+                ? "?"
+                : "%";
           } else if ([30, 63, 96].includes(numValue)) {
             output +=
-              primeNonPrime === '2' ||
-              primeNonPrime === '3' ||
-              primeNonPrime === '5' ||
-              primeNonPrime === '7'
+              primeNonPrime === "2" ||
+              primeNonPrime === "3" ||
+              primeNonPrime === "5" ||
+              primeNonPrime === "7"
                 ? "'"
-                : '$';
+                : "$";
           } else if ([31, 64, 97].includes(numValue)) {
             output +=
-              primeNonPrime === '2' ||
-              primeNonPrime === '3' ||
-              primeNonPrime === '5' ||
-              primeNonPrime === '7'
-                ? '.'
-                : '*';
+              primeNonPrime === "2" ||
+              primeNonPrime === "3" ||
+              primeNonPrime === "5" ||
+              primeNonPrime === "7"
+                ? "."
+                : "*";
           } else if ([32, 65, 98].includes(numValue)) {
             output +=
-              primeNonPrime === '2' ||
-              primeNonPrime === '3' ||
-              primeNonPrime === '5' ||
-              primeNonPrime === '7'
-                ? ','
-                : ':';
+              primeNonPrime === "2" ||
+              primeNonPrime === "3" ||
+              primeNonPrime === "5" ||
+              primeNonPrime === "7"
+                ? ","
+                : ":";
           } else if ([33, 66, 99].includes(numValue)) {
             output +=
-              primeNonPrime === '2' ||
-              primeNonPrime === '3' ||
-              primeNonPrime === '5' ||
-              primeNonPrime === '7'
-                ? '/'
+              primeNonPrime === "2" ||
+              primeNonPrime === "3" ||
+              primeNonPrime === "5" ||
+              primeNonPrime === "7"
+                ? "/"
                 : '"';
           } else {
             let decodedChar = String.fromCharCode(96 + (numValue % 33));
-            if (['2', '3', '5', '7'].includes(primeNonPrime)) {
+            if (["2", "3", "5", "7"].includes(primeNonPrime)) {
               decodedChar = decodedChar.toUpperCase();
             }
             output += decodedChar;
@@ -258,7 +267,7 @@
 
       // Function to merge two messages
       function mergeMessage(msg1, msg2) {
-        let merged = '';
+        let merged = "";
         let i = 0,
           j = 0;
         while (i < msg1.length || j < msg2.length) {
@@ -275,17 +284,17 @@
 
       // Function to extract letters from a string
       function findLetters(str) {
-        return str.replace(/[^a-zA-Z]/g, '');
+        return str.replace(/[^a-zA-Z]/g, "");
       }
 
       // Function to extract numbers from a string
       function findNumbers(str) {
-        return str.replace(/\D/g, '');
+        return str.replace(/\D/g, "");
       }
 
       // Function to reverse the cipher shift
       function removeCipher(key, message) {
-        let finalMSG = '';
+        let finalMSG = "";
         for (const c of message) {
           if (/\d/.test(c)) {
             const shifted = (parseInt(c) - (key % 10) + 10) % 10;
@@ -306,11 +315,11 @@
         return finalKey;
       }
 
-      const outputField = document.getElementById('outputfield');
+      const outputField = document.getElementById("outputfield");
 
       // Main function to process the encryption or decryption
       function process() {
-        const message = document.getElementById('message').value;
+        const message = document.getElementById("message").value;
 
         const letters = findLetters(message);
         const key = convertToKey(letters);
@@ -323,16 +332,16 @@
       }
 
       function copyText() {
-        const decryptedMessage = document.getElementById('outputfield').value;
+        const decryptedMessage = document.getElementById("outputfield").value;
 
         navigator.clipboard
           .writeText(decryptedMessage)
           .then(() => {
-            document.getElementById('clipboard').textContent = 'Copied ✓';
+            document.getElementById("clipboard").textContent = "Copied ✓";
             //alert("Copied to clipboard!");
           })
           .catch((err) => {
-            console.error('Failed to copy: ', err);
+            console.error("Failed to copy: ", err);
           });
       }
     </script>

@@ -4,10 +4,32 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>The Ultimate Cipher</title>
-    <link rel="apple-touch-icon" sizes="180x180" href="Themes/images/favicons/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="Themes/images/favicons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="Themes/images/favicons/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="Themes/images/favicons/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="Themes/images/favicons/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="Themes/images/favicons/favicon-16x16.png"
+    />
+    <link rel="manifest" href="Themes/images/favicons/site.webmanifest" />
+
+    <!-- <link id="theme-link" rel="stylesheet" href="" /> -->
+
+    <style>
+      body {
+        visibility: hidden; /* Hide body initially */
+      }
+    </style>
     <script src="Themes/loadTheme.js"></script>
   </head>
 
@@ -16,9 +38,13 @@
       <div class="hud" id="hud">This is the HUD!</div>
     </div>
 
-    <div class="image-container snow-theme">
-      <img src="Themes/images/seasons/winter/winter-bg.png" alt="snowy background" />
-    </div>
+    <!-- <div class="image-container snow-theme">
+      <img
+        id="background-image"
+        src="Themes/images/seasons/winter/winter-bg.png"
+        alt="snowy background"
+      />
+    </div> -->
 
     <div id="particles-js"></div>
     <!-- <div class="entire-container"> -->
@@ -64,10 +90,10 @@
     <script>
       // VIP code functionality
       function enableSpecialAccess() {
-        const vipCode = sessionStorage.getItem('VIP-CODE');
-        const vipButton = document.getElementById('vip-button');
+        const vipCode = sessionStorage.getItem("VIP-CODE");
+        const vipButton = document.getElementById("vip-button");
 
-        if (vipCode === 'true') {
+        if (vipCode === "true") {
           vipButton.disabled = false;
         } else {
           vipButton.disabled = true;
@@ -78,24 +104,24 @@
         enableSpecialAccess();
       };
 
-      document.addEventListener('DOMContentLoaded', () => {
-        const button = document.getElementById('vip-button');
-        const HUD = document.getElementById('hud-container'); // Fixed case
-        const vipCode = sessionStorage.getItem('VIP-CODE');
+      document.addEventListener("DOMContentLoaded", () => {
+        const button = document.getElementById("vip-button");
+        const HUD = document.getElementById("hud-container"); // Fixed case
+        const vipCode = sessionStorage.getItem("VIP-CODE");
 
-        button.addEventListener('mouseover', () => {
-          if (vipCode !== 'true') {
-            document.getElementById('hud').textContent =
-              'Enter VIP code to encrypt longer messages!';
-            HUD.classList.remove('slideUp'); // Ensure slideUp is removed before adding slideDown
-            HUD.classList.add('slideDown');
+        button.addEventListener("mouseover", () => {
+          if (vipCode !== "true") {
+            document.getElementById("hud").textContent =
+              "Enter VIP code to encrypt longer messages!";
+            HUD.classList.remove("slideUp"); // Ensure slideUp is removed before adding slideDown
+            HUD.classList.add("slideDown");
           }
         });
 
-        button.addEventListener('mouseout', () => {
-          if (vipCode !== 'true') {
-            HUD.classList.remove('slideDown'); // Remove slideDown before adding slideUp
-            HUD.classList.add('slideUp');
+        button.addEventListener("mouseout", () => {
+          if (vipCode !== "true") {
+            HUD.classList.remove("slideDown"); // Remove slideDown before adding slideUp
+            HUD.classList.add("slideUp");
           }
         });
       });

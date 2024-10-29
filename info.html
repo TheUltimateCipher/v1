@@ -4,12 +4,21 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>The Ultimate Cipher - Info</title>
+    <style>
+      body {
+        visibility: hidden; /* Hide body initially */
+      }
+    </style>
     <script src="Themes/loadTheme.js"></script>
   </head>
   <body>
-    <div class="image-container snow-theme">
-      <img src="Themes/images/seasons/winter/winter-bg.png" alt="snowy background" />
-    </div>
+    <!-- <div class="image-container snow-theme">
+      <img
+        id="background-image"
+        src="Themes/images/seasons/winter/winter-bg.png"
+        alt="snowy background"
+      />
+    </div> -->
 
     <h1>FAQ Continued</h1>
     <p>
@@ -60,9 +69,9 @@
     </button>
 
     <script>
-      const body = document.querySelector('body');
-      body.classList.add('info-body');
-      body.classList.remove('info-body');
+      const body = document.querySelector("body");
+      body.classList.add("info-body");
+      body.classList.remove("info-body");
     </script>
   </body>
 </html>

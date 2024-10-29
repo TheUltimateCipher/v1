@@ -4,11 +4,25 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>The Ultimate Cipher</title>
-    <link rel="apple-touch-icon" sizes="180x180" href="Themes/images/favicons/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="Themes/images/favicons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="Themes/images/favicons/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
-    
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="Themes/images/favicons/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="Themes/images/favicons/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="Themes/images/favicons/favicon-16x16.png"
+    />
+    <link rel="manifest" href="/site.webmanifest" />
+
     <style>
       /* Hide the entire body initially */
       body {
@@ -18,138 +32,138 @@
 
     <script src="Themes/loadTheme.js"></script>
     <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        const code = sessionStorage.getItem('SpecialPasscode'); // Get the VIP code from sessionStorage
+      document.addEventListener("DOMContentLoaded", () => {
+        const code = sessionStorage.getItem("SpecialPasscode"); // Get the VIP code from sessionStorage
 
         // Ensure the VIP-CODE is 'true', meaning the user is a VIP
-        if (code !== 'true') {
+        if (code !== "true") {
           // If not VIP, redirect the user to 404.html
-          window.location.href = '404.html';
+          window.location.href = "404.html";
         } else {
           // Show the page if the user is VIP
-          document.body.style.visibility = 'visible';
+          document.body.style.visibility = "visible";
         }
       });
     </script>
   </head>
-
 
   <body>
     <div class="hud-container" id="hud-container">
       <div class="hud" id="hud">This is the HUD!</div>
     </div>
 
-    <div class="image-container snow-theme">
-      <img src="Themes/images/seasons/winter/winter-bg.png" alt="snowy background" />
-    </div>
+    <!-- <div class="image-container snow-theme">
+      <img
+        id="background-image"
+        src="Themes/images/seasons/winter/winter-bg.png"
+        alt="snowy background"
+      />
+    </div> -->
 
     <div id="particles-js"></div>
     <!-- <div class="entire-container"> -->
     <div class="square">
-    <h1>CAM0 Tabs</h1>
+      <h1>CAM0 Tabs</h1>
 
-    <!-- <input
+      <!-- <input
       type="text"
       id="urlInput"
       name="urlInput"
       placeholder="URL"
     /><br /><br /> -->
 
-    <div class="container">
-      <div class="entryarea">
-        <input
-          class="message"
-          id="urlInput"
-          type="text"
-          autocomplete="off"
-          required
-        />
-        <div class="labelline">Enter URL:</div>
+      <div class="container">
+        <div class="entryarea">
+          <input
+            class="message"
+            id="urlInput"
+            type="text"
+            autocomplete="off"
+            required
+          />
+          <div class="labelline">Enter URL:</div>
+        </div>
       </div>
-    </div>
 
-    <!-- <input
+      <!-- <input
       type="text"
       id="titleInput"
       name="titleInput"
       placeholder="Page Title"
     /><br /><br /> -->
 
-    <div class="container">
-      <div class="entryarea">
-        <input
-          class="message"
-          id="titleInput"
-          type="text"
-          autocomplete="off"
-          required
-        />
-        <div class="labelline">Enter page title:</div>
+      <div class="container">
+        <div class="entryarea">
+          <input
+            class="message"
+            id="titleInput"
+            type="text"
+            autocomplete="off"
+            required
+          />
+          <div class="labelline">Enter page title:</div>
+        </div>
       </div>
-    </div>
 
-    <p>(Copy Image Adress then paste below)</p>
-    <!-- <input
+      <p>(Copy Image Adress then paste below)</p>
+      <!-- <input
       type="text"
       id="iconInput"
       name="iconInput"
       placeholder="Icon URL"
     /><br /> -->
-    <div class="container">
-    <div class="entryarea">
-        <input
-          class="message"
-          id="iconInput"
-          type="text"
-          autocomplete="off"
-          required
-        />
-        <div class="labelline">Enter icon URL:</div>
+      <div class="container">
+        <div class="entryarea">
+          <input
+            class="message"
+            id="iconInput"
+            type="text"
+            autocomplete="off"
+            required
+          />
+          <div class="labelline">Enter icon URL:</div>
+        </div>
       </div>
-    </div>
 
-    <button onclick="openBlank()" type="button" class="glow-button">Run</button>
-    <button onclick="GoBack()" type="button" class="glow-button">Back</button>
+      <button onclick="openBlank()" type="button" class="glow-button">
+        Run
+      </button>
+      <button onclick="GoBack()" type="button" class="glow-button">Back</button>
     </div>
     <script>
       function GoBack() {
-    // Send a message to the parent window to close the tab
-    window.parent.postMessage('closeTab', '*');
+        // Send a message to the parent window to close the tab
+        window.parent.postMessage("closeTab", "*");
 
-    // Optionally, navigate to another page or close the current tab
-    window.location.href = "index.html";
-}
+        // Optionally, navigate to another page or close the current tab
+        window.location.href = "index.html";
+      }
 
+      function openBlank() {
+        var url = document.getElementById("urlInput").value;
+        var title = document.getElementById("titleInput").value;
+        var iconUrl = document.getElementById("iconInput").value;
 
+        var win = window.open();
 
-          function openBlank() {
-            var url = document.getElementById('urlInput').value;
-            var title = document.getElementById('titleInput').value;
-            var iconUrl = document.getElementById('iconInput').value;
+        var iframe = win.document.createElement("iframe");
+        iframe.style.width = "100%";
+        iframe.style.height = "100%";
+        iframe.style.border = "none";
+        iframe.src = url;
 
+        // Add onload event to the iframe
+        iframe.onload = function () {
+          win.document.title = title;
+          var iconLink = win.document.createElement("link");
+          iconLink.rel = "icon";
+          iconLink.href = iconUrl;
+          win.document.head.appendChild(iconLink);
+        };
 
-            var win = window.open();
-
-              var iframe = win.document.createElement('iframe');
-              iframe.style.width = "100%";
-              iframe.style.height = "100%";
-              iframe.style.border = "none";
-              iframe.src = url;
-
-              // Add onload event to the iframe
-              iframe.onload = function() {
-                win.document.title = title;
-                var iconLink = win.document.createElement('link');
-                iconLink.rel = 'icon';
-                iconLink.href = iconUrl;
-                win.document.head.appendChild(iconLink);
-              };
-
-              win.document.body.appendChild(iframe);
-
-          }
+        win.document.body.appendChild(iframe);
+      }
     </script>
-        <script src="Themes/scroll.js"></script>
-
+    <script src="Themes/scroll.js"></script>
   </body>
 </html>

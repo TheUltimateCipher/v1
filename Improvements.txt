@@ -1,7 +1,10 @@
-Create a favicon dumb asterisk
+Ur favicon still needs to be applied to all webpages mronrn
+Make the wording in some places better cuz its supposd 
+to be more proffesional for the judges.
 
-Color stuff:
-Main blue COlor: 84a7d9
-Darker blue shade: 7593bf
+SMALL ISSUE LAST PRIORITY: Theme loading is good WITHOUT custom background image. Fix small flash
+between website navigation.
 
-Text stuff for light theme: #424242
+The particles for the seasons are not properly loading partially cuz ur an idiot and 
+mostly because YOUR FORGOT TO CREATE THE PARTICLES IN THE FIRST PLACE>
+Also the seasonal themes still look horrifying so please fix css 
