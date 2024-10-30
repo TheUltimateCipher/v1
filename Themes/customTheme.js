@@ -62,16 +62,13 @@ async function importSettings(file) {
 // Function to apply the stored custom background image
 function applyCustomBackgroundImage() {
   const storedImage = localStorage.getItem("customBackgroundImage");
-  //const imgElement = document.getElementById("background-image");
 
-  if (storedImage) {
-    document.body.style.backgroundImage = `url(${storedImage})`;
-    //imgElement.style.visibility = "hidden"; // Hide default background
-  } else {
-    document.body.style.backgroundImage = "none";
-    //imgElement.style.visibility = "visible"; // Restore default background
-  }
+  if (!storedImage) return; // Exit the function if no custom image is in localStorage
+
+  document.body.style.backgroundImage = `url(${storedImage})`;
+  //imgElement.style.visibility = "hidden"; // Hide default background
 }
+
 
 // Listen for theme changes
 document

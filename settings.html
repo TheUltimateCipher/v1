@@ -10,7 +10,7 @@
         visibility: hidden; /* Hide body initially */
       }
       .square {
-        justify-content: flex-start;
+        justify-content: center;
       }
       #customDivider {
         display: flex;
@@ -19,6 +19,7 @@
         align-items: center;
       }
     </style>
+    <script></script>
   </head>
   <body>
     <div class="hud-container" id="hud-container">
@@ -275,6 +276,16 @@
         const particlesEnabled =
           localStorage.getItem("particlesEnabled") === "true";
 
+        const square = document.querySelector(".square");
+        if (square && savedTheme === "custom") {
+          square.style.justifyContent = "flex-start"; // Align content to the top
+          console.log("you are most welcome");
+        } else {
+          if (savedTheme === "custom") {
+            console.log("no square to be found");
+          }
+        }
+
         // Apply saved theme, but fallback to a non-VIP theme if Hack is selected and no VIP access
         if (
           savedTheme === "hack" &&
@@ -350,11 +361,22 @@
         ) {
           bgImage.onload = () => {
             document.body.style.visibility = "visible"; // Show the body if theme is not one of the predefined ones
+            if (savedTheme === "custom") {
+              square.style.justifyContent = "flex-start"; // Align content to the top
+            } else {
+              console.log("bgcheck");
+              checkOverflow();
+            }
           };
         } else {
           // Show the page once the theme's CSS file is fully loaded
           link.onload = function () {
             document.body.style.visibility = "visible";
+            if (savedTheme === "custom") {
+              square.style.justifyContent = "flex-start"; // Align content to the top
+            } else {
+              checkOverflow();
+            }
           };
         }
 
@@ -382,8 +404,8 @@
             if (hasCustomBackground === "true") {
               applyCustomBackgroundImage();
             } else {
-              const bgImage = document.getElementById("background-image");
-              bgImage.style.visibility = "hidden";
+              //const bgImage = document.getElementById("background-image");
+              //bgImage.style.visibility = "hidden";
               document.body.style.backgroundImage = "none";
             }
           } else {
@@ -418,6 +440,22 @@
           //     switchImage(savedTheme); // Set initial background image
           //   }
           // }
+          function checkOverflow() {
+            const square = document.querySelector(".square");
+            console.log("checked");
+            if (square.scrollHeight > square.clientHeight) {
+              // Content is overflowing, disable justify-content: center;
+              square.style.justifyContent = "flex-start"; // Align content to the top
+            } else {
+              // Content fits, keep it centered
+              square.style.justifyContent = "center";
+            }
+          }
+          if (savedTheme === "custom") {
+            square.style.justifyContent = "flex-start"; // Align content to the top
+          } else {
+            checkOverflow();
+          }
         });
 
         // Handle particles toggle change
@@ -538,29 +576,38 @@
           console.log("No particlesConfig found in localStorage.");
         }
       }
-    </script>
-    <!-- <script src="Themes/scroll.js"></script> -->
-    <script>
-      window.addEventListener("load", function () {
-        const square = document.querySelector(".square");
 
-        function checkOverflow() {
-          console.log("checked");
-          if (square.scrollHeight > square.clientHeight) {
-            // Content is overflowing, disable justify-content: center;
-            square.style.justifyContent = "flex-start"; // Align content to the top
-          } else {
-            // Content fits, keep it centered
-            square.style.justifyContent = "center";
-          }
+      const square = document.querySelector(".square");
+      function checkOverflow() {
+        console.log("checked");
+        if (square.scrollHeight > square.clientHeight) {
+          // Content is overflowing, disable justify-content: center;
+          square.style.justifyContent = "flex-start"; // Align content to the top
+          console.log("flex");
+        } else {
+          // Content fits, keep it centered
+          square.style.justifyContent = "center";
+          console.log("center");
         }
+      }
 
+      // document.addEventListener("DOMContentLoaded", function () {
+      //   checkOverflow();
+      // });
+      window.addEventListener("load", function () {
         // Initial check once the entire window (including images) is fully loaded
-        checkOverflow();
-
+        const savedTheme = localStorage.getItem("theme") || "dark";
+        if (savedTheme === "custom") {
+              square.style.justifyContent = "flex-start"; // Align content to the top
+            } else {
+              checkOverflow();
+        }
+        //checkOverflow();
+        console.log("final check btw");
         // Optionally, recheck if the window is resized
         window.addEventListener("resize", checkOverflow);
       });
     </script>
+    <!-- <script src="Themes/scroll.js"></script> -->
   </body>
 </html>

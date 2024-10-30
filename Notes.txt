@@ -1,0 +1,14 @@
+If you are a curious person looking at the source code of my project this file
+has NOTHING useful in it. Its just where I note bugs and other stuff.
+IDK why you would want to read it but if so help yourself:
+
+Ur favicon still needs to be applied to all webpages mronrn
+Make the wording in some places better cuz its supposd 
+to be more proffesional for the judges.
+
+SMALL ISSUE LAST PRIORITY: Theme loading is good WITHOUT custom background image. Fix small flash
+between website navigation.
+
+The particles for the seasons are not properly loading partially cuz ur an idiot and 
+mostly because YOUR FORGOT TO CREATE THE PARTICLES IN THE FIRST PLACE>
+Also the seasonal themes still look horrifying so please fix css 
