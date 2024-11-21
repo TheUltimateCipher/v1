@@ -1,6 +1,8 @@
 # The Ultimate Cipher v1.0
 
 **NOTE: v1.0 IS OUTDATED. IT IS RECOMMENDED YOU VISIT v2.0 FOR THE MOST UPDATED VERSION**
+**https://github.com/TheUltimateCipher/theultimatecipher.github.io will always have the most updated version of the Ultimate Cipher!**
+
 
 By using our website you agree to our terms and conditions.
 
